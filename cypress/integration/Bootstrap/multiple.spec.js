@@ -29,13 +29,13 @@ describe('Multiple', () => {
 
     })
 
-    it.only('Toast', () => {
+    it('Toast', () => {
 
         //Toast not visible
         cy.get('.toast').should('not.be.visible')
 
         //Click toast
-        cy.get('#toastbtn').click()
+        cy.get('#toastbtn').click().wait(500)
 
         //Toast is visible
         cy.get('.toast').should('be.visible')
@@ -45,7 +45,7 @@ describe('Multiple', () => {
         cy.get('.toast').contains('Some text inside the toast body').should('be.visible')
 
         //Cloase Toast
-        cy.get('[data-bs-dismiss="toast"]').click()
+        cy.get('[data-bs-dismiss="toast"]').click().wait(500)
 
         //Toast not visible
         cy.get('.toast').should('not.be.visible')
@@ -55,10 +55,25 @@ describe('Multiple', () => {
     it('Sidebar', () => {
 
         //Sidebar not visible
+        cy.get('#demo').should('not.be.visible')
+
         //Open sidebar
+        cy.get('.container-fluid>.btn').contains('Open Offcanvas Sidebar').click().wait(500) //not w/ wait but w/ intercept if i have what to intercept
+
         //Confirm sidebar is visible
+        cy.get('#demo').should('be.visible')
+
+        //Verify sidebar
+        cy.get('#demo>.offcanvas-header>.offcanvas-title').contains('Heading')
+        cy.get('#demo>.offcanvas-body').children('p').should('length', '3')
+        cy.get('#demo>.offcanvas-body').children('button').contains('A Button').should('be.visible').click()
+        cy.get('#demo>.offcanvas-header>.btn-close').should('be.visible').as('closeSidebar')
+
         //Close sidebar
+        cy.get('@closeSidebar').click().wait(500)
+
         //Confirm sidebar is not visible
+        cy.get('#demo').should('not.be.visible')
 
     })
 
