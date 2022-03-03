@@ -31,7 +31,7 @@ describe('D.S.C.R', () => {
         cy.get('#sel1').should('not.value', '1')
     })
 
-    it('Slider', () => {
+    it.skip('Slider', () => {
 
         //Get initial value
         cy.get('#customRange').should('be.visible').and('value', '50')
@@ -59,16 +59,36 @@ describe('D.S.C.R', () => {
         
     })
 
-    it.only('Credentials', () => {
+    it('Credentials', () => {
         
+        //usr / pwd txt
+        cy.get('[for="uname"]').should('contain', 'Username:').and('be.visible')
+        cy.get('[for="pwd"]').should('contain', 'Password:').and('be.visible')
+
         //Blank credentials
-        //Only username
-        //Only pwd
-        //Verify Checkbox
-        //Checkbox on
-        //Confirm Checkbox
+        cy.get('#uname').siblings('.invalid-feedback').should('contain', 'Please fill out this field.')
+        cy.get('#pwd').siblings('.invalid-feedback').should('contain', 'Please fill out this field.')
+
+        //username / pwd
+        cy.get('#uname').type('username')
+        cy.get('#uname').siblings('.valid-feedback').should('contain', 'Valid.')
+
+        cy.get('#pwd').type('pwd')
+        cy.get('#pwd').siblings('.valid-feedback').should('contain', 'Valid.')
+
+        //Verify Checkbox (and txt)
+        cy.get('#myCheck').siblings('.form-check-label').should('contain', 'I agree on blabla.')
+        cy.get('#myCheck').should('not.be.checked').siblings('.invalid-feedback').should('contain', 'Check this checkbox to continue.')  //asa citeste???
+
+        //Checkbox confirmation
+        cy.get('#myCheck').check()    //.siblings('.valid-feedback').should('contain', 'Valid.')
+        cy.get('#myCheck').should('be.checked').siblings('.valid-feedback').should('contain', 'Valid.')
+        
         //Uncheck(box)
-        //Confirm Checkbox
+        cy.get('#myCheck').uncheck()
+
+        //(Unchecked)box confirmation
+        cy.get('#myCheck').should('not.be.checked').siblings('.invalid-feedback').should('contain', 'Check this checkbox to continue.')
 
     })
 
