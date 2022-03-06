@@ -15,7 +15,7 @@ describe('Home Page', () => {
         // cy.get('[data-cy="column-one"]').contains('Column 1').should('be.visible')
         // cy.get('[data-cy="column-two"]').contains('Column 2').should('be.visible')
         // cy.get('[data-cy="column-three"]').contains('Column 3').should('be.visible')
-
+        //this
     })
 
 })
